@@ -74,7 +74,10 @@ def load_feature_data():
     """Loads engineered customer features from disk."""
     feat_path = DATA_FEATURES / "customer_features.csv"
     if feat_path.exists():
-        return pd.read_csv(feat_path)
+        df = pd.read_csv(feat_path)
+        if "Customer ID" in df.columns:
+            df.rename(columns={"Customer ID": "CustomerID"}, inplace=True)
+        return df
     return pd.DataFrame()
 
 # Load assets
