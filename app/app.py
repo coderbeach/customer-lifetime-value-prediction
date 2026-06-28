@@ -225,16 +225,24 @@ elif app_mode == "Single Customer Lookup":
         is_uk = st.selectbox("Location", ["United Kingdom (Domestic)", "International"], index=0 if default_vals["Is_UK"] == 1 else 1)
         is_uk_val = 1 if is_uk == "United Kingdom (Domestic)" else 0
         
-        # Build features array matching training layout
-        # ['Recency', 'Frequency', 'Monetary', 'Tenure', 'Product_Diversity', 'Avg_Basket_Size', 'Avg_Order_Value', 'Avg_Monthly_Spend', 'Seasonal_Score_Q4', 'Avg_Purchase_Interval', 'Revenue_Growth', 'Is_UK']
-        feats = np.array([[
-            recency, frequency, monetary, tenure, prod_div, avg_basket, 
-            avg_o_val, avg_m_spend, default_vals["Seasonal_Score_Q4"],
-            default_vals["Avg_Purchase_Interval"], rev_growth, is_uk_val
-        ]])
+        # Build features DataFrame matching training layout
+        feats_df = pd.DataFrame([{
+            "Frequency": frequency,
+            "Monetary": monetary,
+            "Recency": recency,
+            "Tenure": tenure,
+            "Product_Diversity": prod_div,
+            "Avg_Basket_Size": avg_basket,
+            "Avg_Order_Value": avg_o_val,
+            "Avg_Monthly_Spend": avg_m_spend,
+            "Seasonal_Score_Q4": default_vals["Seasonal_Score_Q4"],
+            "Avg_Purchase_Interval": default_vals["Avg_Purchase_Interval"],
+            "Revenue_Growth": rev_growth,
+            "Is_UK": is_uk_val
+        }])
         
         if st.button("Predict 90-Day Future Spend (CLTV)"):
-            pred = model.predict(feats)[0]
+            pred = model.predict(feats_df)[0]
             pred = max(0, pred) # Ensure positive
             
             st.markdown("---")
