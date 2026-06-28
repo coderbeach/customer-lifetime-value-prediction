@@ -5,7 +5,7 @@ Handles validation metrics, residual plotting, error distributions, and SHAP exp
 
 import logging
 from pathlib import Path
-from typing import Dict, List, Any, Tuple
+from typing import Dict, List, Any, Tuple, Union
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -23,7 +23,7 @@ class ModelEvaluator:
     for Customer Lifetime Value regression models.
     """
 
-    def __init__(self, y_test: np.ndarray, feature_names: List[str]):
+    def __init__(self, y_test: Union[np.ndarray, pd.Series], feature_names: List[str]):
         """
         Initializes ModelEvaluator.
         
@@ -31,7 +31,7 @@ class ModelEvaluator:
             y_test: True future revenue values.
             feature_names: List of feature names.
         """
-        self.y_test = y_test
+        self.y_test = np.asarray(y_test)
         self.feature_names = feature_names
 
     def calculate_metrics(self, y_pred: np.ndarray) -> Dict[str, float]:
@@ -62,7 +62,7 @@ class ModelEvaluator:
             "MAPE": float(mape)
         }
 
-    def generate_evaluation_summary(self, models_dict: Dict[str, Any], X_test: np.ndarray) -> pd.DataFrame:
+    def generate_evaluation_summary(self, models_dict: Dict[str, Any], X_test: Union[pd.DataFrame, np.ndarray]) -> pd.DataFrame:
         """
         Evaluates a dictionary of models on the test set and returns a comparison DataFrame.
         """
@@ -120,7 +120,7 @@ class ModelEvaluator:
         plt.close()
         logger.info(f"Saved prediction error plot for {model_name} to {save_path}")
 
-    def explain_with_shap(self, model: Any, X_train: np.ndarray, X_test: np.ndarray, save_dir: Path) -> None:
+    def explain_with_shap(self, model: Any, X_train: Union[pd.DataFrame, np.ndarray], X_test: Union[pd.DataFrame, np.ndarray], save_dir: Path) -> None:
         """
         Generates and saves SHAP summary and bar plots.
         """

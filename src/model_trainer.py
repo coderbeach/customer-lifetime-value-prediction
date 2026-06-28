@@ -39,7 +39,7 @@ class ModelTrainer:
         self.target_col = target_col
         self.models: Dict[str, Any] = {}
 
-    def prepare_data(self, test_size: float = 0.2, random_state: int = 42) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, List[str]]:
+    def prepare_data(self, test_size: float = 0.2, random_state: int = 42) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series, List[str]]:
         """
         Prepares training and testing datasets. Drops CustomerID and the target.
         
@@ -64,7 +64,7 @@ class ModelTrainer:
         feature_names = list(X.columns)
         
         X_train, X_test, y_train, y_test = train_test_split(
-            X.values, y.values, test_size=test_size, random_state=random_state
+            X, y, test_size=test_size, random_state=random_state
         )
         
         logger.info(f"Features: {feature_names}")
@@ -128,7 +128,7 @@ class ModelTrainer:
             }
         }
 
-    def train_single_model(self, model_name: str, X_train: np.ndarray, y_train: np.ndarray, tune_hyperparams: bool = True) -> Dict[str, Any]:
+    def train_single_model(self, model_name: str, X_train: Union[pd.DataFrame, np.ndarray], y_train: Union[pd.Series, np.ndarray], tune_hyperparams: bool = True) -> Dict[str, Any]:
         """
         Trains a single model, optionally with randomized search hyperparameter tuning.
         """
@@ -173,7 +173,7 @@ class ModelTrainer:
             "cv_rmse": cv_score
         }
 
-    def train_all_models(self, X_train: np.ndarray, y_train: np.ndarray, tune_hyperparams: bool = True) -> Dict[str, Dict[str, Any]]:
+    def train_all_models(self, X_train: Union[pd.DataFrame, np.ndarray], y_train: Union[pd.Series, np.ndarray], tune_hyperparams: bool = True) -> Dict[str, Dict[str, Any]]:
         """
         Iterates over and trains all configured models.
         """
