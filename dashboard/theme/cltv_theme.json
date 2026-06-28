@@ -1,0 +1,66 @@
+{
+    "name": "CLTV Project Dark Theme",
+    "dataColors": [
+        "#58a6ff",
+        "#3fb950",
+        "#d2a8ff",
+        "#f0883e",
+        "#f85149",
+        "#56d364",
+        "#e3b341",
+        "#8b949e"
+    ],
+    "background": "#0d1117",
+    "foreground": "#c9d1d9",
+    "tableAccent": "#58a6ff",
+    "visualStyles": {
+        "*": {
+            "*": {
+                "background": [
+                    {
+                        "show": true,
+                        "color": {
+                            "solid": {
+                                "color": "#161b22"
+                            }
+                        },
+                        "transparency": 0
+                    }
+                ],
+                "border": [
+                    {
+                        "show": true,
+                        "color": {
+                            "solid": {
+                                "color": "#30363d"
+                            }
+                        },
+                        "radius": 8
+                    }
+                ],
+                "title": [
+                    {
+                        "show": true,
+                        "fontColor": {
+                            "solid": {
+                                "color": "#c9d1d9"
+                            }
+                        },
+                        "fontSize": 12,
+                        "fontFamily": "Segoe UI Semibold"
+                    }
+                ],
+                "labels": [
+                    {
+                        "show": true,
+                        "color": {
+                            "solid": {
+                                "color": "#8b949e"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
