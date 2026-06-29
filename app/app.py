@@ -203,7 +203,7 @@ if nav_workspace == "📈 Executive Dashboard":
             st.markdown(f"""
             <div class="metric-card">
                 <div class="metric-value">£{avg_historical_spend:,.2f}</div>
-                <div class="metric-label">Avg Customer Revenue (Hist.)</div>
+                <div class="metric-label">Avg Customer Revenue (Hist., 21-Mo)</div>
             </div>
             """, unsafe_allow_html=True)
         with col4:
